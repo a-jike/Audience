@@ -699,6 +699,28 @@
                             <action selector="addNew:" target="Voe-Tx-rLC" id="J0p-J1-MJ6"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7vK-9L-nRs">
+                        <rect key="frame" x="113" y="19" width="113" height="19"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="roundRect" title="Move to Screen" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Km6-yi-BEJ">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="cellTitle"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="moveToScreen:" target="Voe-Tx-rLC" id="uqe-kk-jr6"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zml-OL-y18">
+                        <rect key="frame" x="234" y="19" width="113" height="19"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="roundRect" title="Back to Window" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IWx-tX-S6Q">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="cellTitle"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="backToWindow:" target="Voe-Tx-rLC" id="E4e-Wu-XQz"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
         </window>

@@ -32,5 +32,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func addNew(_ sender: Any) {
         audienceView.addNew()
     }
+
+    @IBAction func moveToScreen(_ sender: Any) {
+        window.isOpaque = false
+        window.backgroundColor = .clear
+    }
+
+    @IBAction func backToWindow(_ sender: Any) {
+        window.isOpaque = true
+        window.backgroundColor = .darkGray
+    }
 }
 
