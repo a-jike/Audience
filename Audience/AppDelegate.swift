@@ -18,9 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         window.contentView?.addSubview(audienceView)
         audienceView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().inset(12)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(200)
+            make.top.centerX.equalToSuperview()
         }
     }
 

@@ -74,11 +74,11 @@ class AudienceView: NSView {
             scrollView.snp.remakeConstraints { (make) in
                 make.width.equalTo((size.width * CGFloat(matrix.x) + margins.left + margins.right))
                 make.height.equalTo((size.height * CGFloat(matrix.y) + margins.top + margins.bottom))
-                make.top.equalToSuperview()
-                make.centerX.equalToSuperview()
             }
-            snp.remakeConstraints { (make) in
-                make.edges.equalTo(scrollView.snp.edges)
+            snp.makeConstraints { (make) in
+                make.top.centerX.equalToSuperview()
+                make.width.equalTo(scrollView.snp.width)
+                make.height.equalTo(scrollView.snp.height)
             }
         }
     }
