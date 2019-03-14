@@ -26,6 +26,12 @@ class AudienceView: NSView {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(CollectionViewItem.self, forItemWithIdentifier: NSUserInterfaceItemIdentifier(rawValue: "CollectionViewItem"))
+        wantsLayer = true
+        layer?.borderColor = NSColor.red.cgColor
+        layer?.borderWidth = 1
+        collectionView.wantsLayer = true
+        collectionView.layer?.borderColor = NSColor.green.cgColor
+        collectionView.layer?.borderWidth = 2
         return collectionView
     }()
 
@@ -35,6 +41,7 @@ class AudienceView: NSView {
         scrollView.drawsBackground = false
         scrollView.documentView = collectionView
         addSubview(scrollView)
+//        addSubview(collectionView)
     }
     
     required init?(coder decoder: NSCoder) {
@@ -43,8 +50,36 @@ class AudienceView: NSView {
     
     override func updateConstraints() {
         super.updateConstraints()
-        scrollView.snp.remakeConstraints { (make) in
-            make.edges.equalToSuperview()
+//        collectionView.snp.remakeConstraints { (make) in
+//            make.centerX.equalToSuperview()
+//            make.top.equalToSuperview()
+//        }
+        let itemsCount = items.count
+        if itemsCount > 0,
+            let superWidth = superview?.bounds.width,
+            let gridLayout = collectionView.collectionViewLayout as? NSCollectionViewGridLayout {
+            struct Matrix {
+                var x: Int = 0
+                var y: Int = 0
+            }
+            let itemSize = gridLayout.minimumItemSize
+            let interitemSpacing = gridLayout.minimumInteritemSpacing
+            let lineSpacing = gridLayout.minimumLineSpacing
+            let margins = gridLayout.margins
+            let size = NSSize(width: itemSize.width + interitemSpacing, height: itemSize.height + lineSpacing)
+            var matrix: Matrix = Matrix(x: 0, y: 0)
+            let horizontal = Int((superWidth - margins.left - margins.right) / size.width)
+            matrix.x = min(itemsCount, horizontal)
+            matrix.y = itemsCount > horizontal ? (itemsCount % horizontal > 0 ? (itemsCount / horizontal) + 1 : itemsCount / horizontal) : 1
+            scrollView.snp.remakeConstraints { (make) in
+                make.width.equalTo((size.width * CGFloat(matrix.x) + margins.left + margins.right))
+                make.height.equalTo((size.height * CGFloat(matrix.y) + margins.top + margins.bottom))
+                make.top.equalToSuperview()
+                make.centerX.equalToSuperview()
+            }
+            snp.remakeConstraints { (make) in
+                make.edges.equalTo(scrollView.snp.edges)
+            }
         }
     }
 
@@ -55,6 +90,7 @@ class AudienceView: NSView {
         item.contentView?.layer?.backgroundColor = NSColor.white.cgColor
         items.append(item)
         collectionView.reloadData()
+        needsUpdateConstraints = true
     }
 }
 
