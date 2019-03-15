@@ -14,6 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
     let audienceView = AudienceView(frame: .zero)
+    let subWindow = NSWindow(contentRect: .zero, styleMask: [.borderless], backing: .buffered, defer: true)
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         window.contentView?.addSubview(audienceView)
@@ -32,13 +33,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @IBAction func moveToScreen(_ sender: Any) {
-        window.isOpaque = false
-        window.backgroundColor = .clear
+        audienceView.removeFromSuperview()
+        
+        let windowRect = window.screen?.visibleFrame ?? .zero
+        subWindow.setFrame(windowRect, display: true)
+        subWindow.isOpaque = false
+        subWindow.backgroundColor = .clear
+        subWindow.contentView?.addSubview(audienceView)
+        subWindow.orderFront(nil)
     }
 
     @IBAction func backToWindow(_ sender: Any) {
-        window.isOpaque = true
-        window.backgroundColor = .darkGray
+        audienceView.removeFromSuperview()
+        window.contentView?.addSubview(audienceView)
+        subWindow.orderOut(nil)
     }
 }
 

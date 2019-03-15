@@ -41,7 +41,6 @@ class AudienceView: NSView {
         scrollView.drawsBackground = false
         scrollView.documentView = collectionView
         addSubview(scrollView)
-//        addSubview(collectionView)
     }
     
     required init?(coder decoder: NSCoder) {
@@ -50,10 +49,6 @@ class AudienceView: NSView {
     
     override func updateConstraints() {
         super.updateConstraints()
-//        collectionView.snp.remakeConstraints { (make) in
-//            make.centerX.equalToSuperview()
-//            make.top.equalToSuperview()
-//        }
         let itemsCount = items.count
         if itemsCount > 0,
             let superWidth = superview?.bounds.width,
