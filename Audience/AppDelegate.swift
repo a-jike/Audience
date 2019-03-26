@@ -48,5 +48,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.contentView?.addSubview(audienceView)
         subWindow.orderOut(nil)
     }
+
+    @IBAction func changeListStyle(_ sender: Any) {
+        switch audienceView.listStyle {
+        case .singleLine:
+            audienceView.listStyle = .multipleLines
+        case .multipleLines:
+            audienceView.listStyle = .singleLine
+        }
+    }
 }
 
