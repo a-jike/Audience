@@ -678,6 +678,7 @@
                     </menu>
                 </menuItem>
             </items>
+            <point key="canvasLocation" x="100" y="-152"/>
         </menu>
         <window title="Audience" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
