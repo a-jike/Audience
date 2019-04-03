@@ -17,6 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let subWindow = NSWindow(contentRect: .zero, styleMask: [.borderless], backing: .buffered, defer: true)
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        audienceView.delegate = self
         window.contentView?.addSubview(audienceView)
         audienceView.snp.makeConstraints { (make) in
             make.top.leading.equalToSuperview()
@@ -49,3 +50,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 }
 
+extension AppDelegate: RollsViewDelegate {
+    func rollsView(_ rollsView: RollsView, didChange visibleIndices: [Int]) {
+        print("visible indices: \(visibleIndices)")
+    }
+}

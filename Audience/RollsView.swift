@@ -8,6 +8,10 @@
 
 import Cocoa
 
+protocol RollsViewDelegate: AnyObject {
+    func rollsView(_ rollsView: RollsView, didChange visibleIndices: [Int])
+}
+
 final class RollsView: NSView {
     enum Direction {
         case backword
@@ -17,10 +21,21 @@ final class RollsView: NSView {
     let contentView = NSView()
     let previousButton = NSButton()
     let nextButton = NSButton()
+    weak var delegate: RollsViewDelegate?
     private let maximumColumn: Int = 5
     private let spacing: CGFloat = 4
     private let itemSize = NSSize(width: 100, height: 75)
     private let buttonInset = NSEdgeInsets(top: 0, left: 50, bottom: 0, right: 50)
+    var visibleIndices: [Int] {
+        var indices: [Int] = []
+        let visibleRect = scrollView.documentVisibleRect
+        contentView.subviews.enumerated().forEach { (index, subview) in
+            if visibleRect.contains(subview.frame) {
+                indices.append(index)
+            }
+        }
+        return indices
+    }
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         wantsLayer = true
@@ -109,8 +124,7 @@ final class RollsView: NSView {
         view.layer?.borderWidth = 3
         contentView.addSubview(view)
         
-        previousButton.isHidden = contentView.subviews.count <= maximumColumn
-        nextButton.isHidden = contentView.subviews.count <= maximumColumn
+        updateButtonAppearance()
         needsUpdateConstraints = true
     }
     
@@ -133,9 +147,30 @@ final class RollsView: NSView {
         }
         NSAnimationContext.beginGrouping()
         NSAnimationContext.current.duration = 0.5
+        NSAnimationContext.current.completionHandler = { [weak self] in
+            self?.scrollDidEnd()
+        }
         contentView.animator().setBoundsOrigin(point)
         scrollView.reflectScrolledClipView(contentView)
         NSAnimationContext.endGrouping()
+    }
+    
+    private func updateButtonAppearance() {
+        let visibleRect = scrollView.documentVisibleRect
+        let itemsCount = contentView.subviews.count
+        
+        previousButton.isHidden = itemsCount <= maximumColumn
+        nextButton.isHidden = itemsCount <= maximumColumn
+        
+        let maximum = itemsCount > 0 ? itemSize.width * CGFloat(itemsCount) + spacing * CGFloat(itemsCount - 1) : 0
+        previousButton.isEnabled = visibleRect.minX > 0
+        nextButton.isEnabled = visibleRect.maxX < maximum
+    }
+    
+    private func scrollDidEnd() {
+        updateButtonAppearance()
+        
+        delegate?.rollsView(self, didChange: visibleIndices)
     }
     
     final class ScrollView: NSScrollView {
