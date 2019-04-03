@@ -10,36 +10,16 @@ import Cocoa
 import SnapKit
 
 class AudienceView: NSView {
-    enum ListStyle {
-        case singleLine, multipleLines
-    }
     var items: [AudienceItem] = []
     let scrollView = NSScrollView()
-    var listStyle: AudienceView.ListStyle = .multipleLines {
-        didSet {
-            collectionView.collectionViewLayout = collectionViewLayout
-            needsUpdateConstraints = true
-        }
-    }
     var collectionViewLayout: NSCollectionViewLayout {
-        switch listStyle {
-        case .singleLine:
-            let flowLayout = NSCollectionViewFlowLayout()
-            flowLayout.minimumInteritemSpacing = 10
-            flowLayout.minimumLineSpacing = 10
-            flowLayout.sectionInset = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-            flowLayout.itemSize = NSSize(width: 100, height: 75)
-            flowLayout.scrollDirection = .horizontal
-            return flowLayout
-        case .multipleLines:
-            let gridLayout = NSCollectionViewGridLayout()
-            gridLayout.minimumItemSize = NSSize(width: 100, height: 75)
-            gridLayout.maximumItemSize = NSSize(width: 100, height: 75)
-            gridLayout.minimumInteritemSpacing = 10
-            gridLayout.minimumLineSpacing = 10
-            gridLayout.margins = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-            return gridLayout
-        }
+        let gridLayout = NSCollectionViewGridLayout()
+        gridLayout.minimumItemSize = NSSize(width: 100, height: 75)
+        gridLayout.maximumItemSize = NSSize(width: 100, height: 75)
+        gridLayout.minimumInteritemSpacing = 10
+        gridLayout.minimumLineSpacing = 10
+        gridLayout.margins = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return gridLayout
     }
     lazy var collectionView: NSCollectionView = {
         let collectionView = NSCollectionView()

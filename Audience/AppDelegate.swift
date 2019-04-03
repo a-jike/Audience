@@ -26,7 +26,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
-
     
     @IBAction func addNew(_ sender: Any) {
         audienceView.addNew()
@@ -47,15 +46,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         audienceView.removeFromSuperview()
         window.contentView?.addSubview(audienceView)
         subWindow.orderOut(nil)
-    }
-
-    @IBAction func changeListStyle(_ sender: Any) {
-        switch audienceView.listStyle {
-        case .singleLine:
-            audienceView.listStyle = .multipleLines
-        case .multipleLines:
-            audienceView.listStyle = .singleLine
-        }
     }
 }
 
