@@ -13,13 +13,13 @@ import SnapKit
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var window: NSWindow!
-    let audienceView = AudienceView(frame: .zero)
+    let audienceView = RollsView(frame: .zero)
     let subWindow = NSWindow(contentRect: .zero, styleMask: [.borderless], backing: .buffered, defer: true)
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         window.contentView?.addSubview(audienceView)
         audienceView.snp.makeConstraints { (make) in
-            make.top.centerX.equalToSuperview()
+            make.top.leading.equalToSuperview()
         }
     }
 
